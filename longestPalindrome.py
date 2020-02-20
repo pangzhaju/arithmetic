@@ -1,4 +1,35 @@
 class Solution:
+    # 动态规划
+    # https://zhuanlan.zhihu.com/p/55538325
+    # https://zhuanlan.zhihu.com/p/91677585
+    def spread(self, s, left, right):
+        while left >=0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+            print("left", left)
+            print("right", right)
+            print("s",s)
+            print("\n")
+        return s[left + 1:right] 
+    def longestPalindrome_dp(self, s: str) -> str:
+        if s==s[::-1]:
+            print("s",s)
+            return s
+        res = s[:1]
+        for i in range(len(s)):
+            print("i", i)
+            palindrome_old = self.spread(s, i, i)
+            print("palindrome_old:", palindrome_old)
+            print("--------分割线-----------")
+            print("i + 1",i+1)
+            palindrome_even = self.spread(s, i, i + 1)
+            print("plaindrome_even:",palindrome_even)
+            # 当前找到的最长回文子串
+            res = max(palindrome_old,palindrome_even,res,key=len)
+            print("res: ",res)
+            print("\n")
+        return res  
+    # 暴力解法
     def longestPalindrome(self, s: str) -> str:
         s_inverse = s[::-1]
         max = 0
@@ -59,5 +90,8 @@ class Solution:
          
         ## return maxStr
        
-
+if __name__ == "__main__":
+        max_str = Solution().longestPalindrome_dp("abcdefdcbaab")
+        print("输入abcdefdcbaab")
+        print("输出",max_str)
 
